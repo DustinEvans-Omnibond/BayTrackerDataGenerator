@@ -42,7 +42,8 @@ def write_data(data_dict, dest_filename):
             if col == len(col_entries):
                 # Snapshot
                 img = Image(col_entries[col-1])
-                sheet.add_image(img, get_column_letter(col))
+                cell = ("%s" % get_column_letter(col)) + str(current_row)
+                sheet.add_image(img, cell)
             else:
                 _ = sheet.cell(column=col, row=current_row, value=col_entries[col-1])
 

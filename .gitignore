@@ -17,6 +17,15 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Python compile code
+*.pyc
+
+# Excel files
+*.xlsx
+
+# PDF files
+*.pdf
+
 # =========================
 # Operating System Files
 # =========================
