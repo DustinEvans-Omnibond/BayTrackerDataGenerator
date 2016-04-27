@@ -13,7 +13,7 @@ from openpyxl import Workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
 from openpyxl.drawing.image import Image
-from openpyxl.styles import Border, Side, Alignment, Font
+from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from datetime import datetime, timedelta
 
 def write_data(data_dict, dest_filename):
@@ -28,6 +28,9 @@ def write_data(data_dict, dest_filename):
         cell_coord = ("%s" % get_column_letter(col)) + '1'
         sheet[cell_coord].font = Font(bold=True,size=18)
         sheet[cell_coord].alignment = Alignment(horizontal='center', vertical='center')
+        sheet[cell_coord].fill = PatternFill(fill_type='solid', start_color='e5e5e5e5', end_color='e5e5e5e5')
+        #sheet[cell_coord].border = Border(outline=Side(border_style='medium', color='FFFFaaaa'))
+
         if col == len(headers):
             sheet.column_dimensions[get_column_letter(col)].width = 55
         else:
