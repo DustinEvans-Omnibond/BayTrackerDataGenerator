@@ -11,6 +11,7 @@
 
 import json, sys, getopt
 import excel_generator
+import pdf_generator
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ def main(argv):
 
             # Write data to Excel and PDF
             excel_generator.write_data(data_dict, 'output.xlsx')
-            #pdf_generator.write_data(data_dict, 'output.pdf')
+            pdf_generator.write_data(data_dict, 'output.pdf')
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -63,13 +64,6 @@ def convert_response(response):
     for bay in response:
         vehicle_list = response[bay]['vehicles']
         for vehicle in vehicle_list:
-            #obj = {}
-            #obj['bay'] = bay
-            #obj['t_enter'] = vehicle['t_enter']
-            #obj['t_leave'] = vehicle['t_leave']
-            #obj['t_queue_enter'] = vehicle['t_queue_enter']
-            #obj['snapshot'] = 'C:/baytracker/webroot' + vehicle['snapshot']
-            #data_dict['vehicles'].append(obj)
             vehicle['bay'] = bay
             vehicle['snapshot'] = 'C:/baytracker/webroot' + vehicle['snapshot']
             data_dict['vehicles'].append(vehicle)

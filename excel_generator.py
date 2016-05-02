@@ -16,6 +16,10 @@ from openpyxl.drawing.image import Image
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from datetime import datetime, timedelta
 
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 def write_data(data_dict, dest_filename):
     wb = Workbook()
 
