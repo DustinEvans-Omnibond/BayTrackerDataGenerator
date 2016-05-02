@@ -50,7 +50,7 @@ def write_data(data_dict, dest_filename):
         sheet.row_dimensions[current_row].height = 200
 
         bay = obj['bay']
-        start_time = datetime.fromtimestamp(obj['t_enter']).strftime('%I:%M %p')
+        start_time = datetime.fromtimestamp(obj['t_enter']).strftime('%Y/%m/%d %I:%M %p')
         service_time = abs(obj['t_leave'] - obj['t_enter'])
         wait_time = abs(obj['t_enter'] - obj['t_queue_enter'])
         total_customer_time = service_time + wait_time
