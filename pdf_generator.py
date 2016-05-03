@@ -25,7 +25,7 @@ PAGE_SIZE = A4
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-def write_data(data_dict, dest_filename):
+def write_data(data_dict, dest_filename, default_timezone):
     table_style = [
         ('GRID', (0,0), (-1,-1), 1, colors.black),
         ('ALIGN', (0,0), (-1,-1), 'CENTER'),
@@ -43,7 +43,9 @@ def write_data(data_dict, dest_filename):
     vehicles = data_dict['vehicles']
     for obj in vehicles:
         bay = obj['bay']
-        tz = timezone(obj['timezone'])
+        tz = timezone(default_timezone)
+        if 'timezone' in obj:
+            tz = timezone(obj['timezone'])
         start_time = datetime.fromtimestamp(obj['t_enter'], tz).strftime('%Y/%m/%d %I:%M %p')
         service_time = abs(obj['t_leave'] - obj['t_enter'])
         wait_time = abs(obj['t_enter'] - obj['t_queue_enter'])

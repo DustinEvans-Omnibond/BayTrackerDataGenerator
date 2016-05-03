@@ -41,15 +41,12 @@ def main(argv):
         vehicles_data = read_json_file(input_filename)
 
         if vehicles_data != None:
-            # Check response and convert response for write_data
-            data_dict = convert_response(vehicles_data, timezone)
-
             # Write report base on output_filename extension
             filepath, file_extension = os.path.splitext(output_filename)
             if file_extension == '.pdf':
-                pdf_generator.write_data(data_dict, output_filename)
+                pdf_generator.write_data(vehicles_data, output_filename, timezone)
             else:
-                excel_generator.write_data(data_dict, output_filename)
+                excel_generator.write_data(vehicles_data, output_filename, timezone)
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -63,30 +60,6 @@ def read_json_file(filename):
     except IOError as e:
         print('ERROR: Could not read ' + filename)
         return None
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-def convert_response(response, timezone):
-    data_dict = {'vehicles': []}
-    for bay in response:
-        vehicle_list = response[bay]['vehicles']
-        for vehicle in vehicle_list:
-            vehicle['bay'] = bay
-            vehicle['timezone'] = timezone
-            vehicle['snapshot'] = 'C:/baytracker/webroot' + vehicle['snapshot']
-            data_dict['vehicles'].append(vehicle)
-
-    # Sort by t_enter
-    data_dict['vehicles'] = sorted(data_dict['vehicles'], key=_by_value_key)
-
-    return data_dict
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-def _by_value_key(d):
-    return d['t_enter']
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

@@ -21,7 +21,7 @@ from pytz import timezone
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-def write_data(data_dict, dest_filename):
+def write_data(data_dict, dest_filename, default_timezone):
     wb = Workbook()
 
     sheet = wb.active
@@ -51,7 +51,9 @@ def write_data(data_dict, dest_filename):
         sheet.row_dimensions[current_row].height = 200
 
         bay = obj['bay']
-        tz = timezone(obj['timezone'])
+        tz = timezone(default_timezone)
+        if 'timezone' in obj:
+            tz = timezone(obj['timezone'])
         start_time = datetime.fromtimestamp(obj['t_enter'], tz).strftime('%Y/%m/%d %I:%M %p')
         service_time = abs(obj['t_leave'] - obj['t_enter'])
         wait_time = abs(obj['t_enter'] - obj['t_queue_enter'])
