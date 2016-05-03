@@ -77,7 +77,16 @@ def convert_response(response, timezone):
             vehicle['snapshot'] = 'C:/baytracker/webroot' + vehicle['snapshot']
             data_dict['vehicles'].append(vehicle)
 
+    # Sort by t_enter
+    data_dict['vehicles'] = sorted(data_dict['vehicles'], key=_by_value_key)
+
     return data_dict
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+def _by_value_key(d):
+    return d['t_enter']
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
