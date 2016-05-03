@@ -15,6 +15,7 @@ from openpyxl.cell import get_column_letter
 from openpyxl.drawing.image import Image
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from datetime import datetime, timedelta
+from pytz import timezone
 
 
 #-------------------------------------------------------------------------------
@@ -50,7 +51,8 @@ def write_data(data_dict, dest_filename):
         sheet.row_dimensions[current_row].height = 200
 
         bay = obj['bay']
-        start_time = datetime.fromtimestamp(obj['t_enter']).strftime('%Y/%m/%d %I:%M %p')
+        tz = timezone(obj['timezone'])
+        start_time = datetime.fromtimestamp(obj['t_enter'], tz).strftime('%Y/%m/%d %I:%M %p')
         service_time = abs(obj['t_leave'] - obj['t_enter'])
         wait_time = abs(obj['t_enter'] - obj['t_queue_enter'])
         total_customer_time = service_time + wait_time
