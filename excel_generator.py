@@ -27,26 +27,34 @@ def write_data(data_dict, dest_filename, default_timezone):
     sheet = wb.active
     sheet.title = 'BayTracker Data'
 
-    # Create column headers
-    headers = ['Bay', 'Start Time', 'Service Time', 'Wait Time', 'Total Customer Time', 'Snapshot']
-    for col in range(1, len(headers)+1):
-        cell_coord = ("%s" % get_column_letter(col)) + '1'
-        sheet[cell_coord].font = Font(bold=True,size=18)
+    # Create meta info headers if available
+    current_row = 1
+    if 'headers' in data_dict:
+        meta_headers = data_dict['headers']
+        for header in meta_headers:
+            cell_coord = 'A' + str(current_row)
+            sheet[cell_coord].font = Font(bold=True, size=18)
+
+            _ = sheet.cell(column=1, row=current_row, value=header)
+            current_row += 1
+
+
+    # Create column headers and get cell widths
+    col_headers = ['Bay', 'Start Time', 'Service Time', 'Wait Time', 'Total Customer Time', 'Snapshot']
+    col_widths = [40, 40, 40, 40, 40, 55]
+    for col in range(1, len(col_headers)+1):
+        cell_coord = ("%s" % get_column_letter(col)) + str(current_row)
+        sheet[cell_coord].font = Font(bold=True, size=18)
         sheet[cell_coord].alignment = Alignment(horizontal='center', vertical='center')
         sheet[cell_coord].fill = PatternFill(fill_type='solid', start_color='e5e5e5e5', end_color='e5e5e5e5')
-        #sheet[cell_coord].border = Border(outline=Side(border_style='medium', color='FFFFaaaa'))
+        sheet.column_dimensions[get_column_letter(col)].width = col_widths[col-1]
 
-        if col == len(headers):
-            sheet.column_dimensions[get_column_letter(col)].width = 55
-        else:
-            sheet.column_dimensions[get_column_letter(col)].width = 40
-
-        _ = sheet.cell(column=col, row=1, value=headers[col-1])
+        _ = sheet.cell(column=col, row=current_row, value=col_headers[col-1])
 
 
     # Write data to sheet
     vehicles = data_dict['vehicles']
-    current_row = 2
+    current_row += 1
     for obj in vehicles:
         sheet.row_dimensions[current_row].height = 200
 
@@ -76,6 +84,16 @@ def write_data(data_dict, dest_filename, default_timezone):
 
         current_row += 1
 
+
+    # Create footers if exists in data_dict
+    if 'footers' in data_dict:
+        footers = data_dict['footers']
+        for footer in footers:
+            cell_coord = 'A' + str(current_row)
+            sheet[cell_coord].font = Font(bold=True, size=18)
+
+            _ = sheet.cell(column=1, row=current_row, value=footer)
+            current_row += 1
 
     # Write Excell workbook to destination file
     wb.save(filename=dest_filename)

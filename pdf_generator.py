@@ -36,6 +36,10 @@ def write_data(data_dict, dest_filename, default_timezone):
         ('FONTNAME', (0,0), (-1,0), 'Times-Bold'),
     ]
 
+    # Get meta info headers
+    if 'headers' in data_dict:
+        meta_headers = data_dict['headers']
+
     data = [
         ['Bay', 'Start Time', 'Service Time', 'Wait Time', 'Total Customer Time', 'Snapshot']
     ]
