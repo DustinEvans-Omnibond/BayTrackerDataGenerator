@@ -69,7 +69,7 @@ def write_data(data_dict, dest_filename, default_timezone):
         snapshot = obj['snapshot']
 
         col_entries = [bay, start_time, str(timedelta(seconds=service_time)), str(timedelta(seconds=wait_time)), str(timedelta(seconds=total_customer_time)), snapshot]
-        for col in xrange(1, len(col_entries)+1):
+        for col in range(1, len(col_entries)+1):
             cell_coord = ("%s" % get_column_letter(col)) + str(current_row)
             sheet[cell_coord].font = Font(bold=True,size=14)
             sheet[cell_coord].alignment = Alignment(horizontal='center', vertical='center')
