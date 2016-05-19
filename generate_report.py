@@ -11,7 +11,7 @@
 
 import json, sys, getopt, os
 import excel_generator
-import pdf_generator
+#import pdf_generator
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -43,10 +43,11 @@ def main(argv):
         if vehicles_data != None:
             # Write report base on output_filename extension
             filepath, file_extension = os.path.splitext(output_filename)
-            if file_extension == '.pdf':
-                pdf_generator.write_data(vehicles_data, output_filename, timezone)
-            else:
-                excel_generator.write_data(vehicles_data, output_filename, timezone)
+            excel_generator.write_data(vehicles_data, output_filename, timezone)
+            #if file_extension == '.pdf':
+            #    pdf_generator.write_data(vehicles_data, output_filename, timezone)
+            #else:
+            #    excel_generator.write_data(vehicles_data, output_filename, timezone)
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
